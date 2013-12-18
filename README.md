@@ -7,4 +7,7 @@ PreReqs
 =======
 
 VMware PowerCLI
+
 Zerto PowerShell Cmdlets
+
+PowerShell v3

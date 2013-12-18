@@ -148,7 +148,7 @@ FUNCTION Enable-HostMaintenance
                 Write-Verbose "Waiting for All VMs to migrate off $SourceVMHost, there are $($VMsOnHost.Count) remaining"
                 TRY
                     {
-                    $VMsOnHOst = Get-VMHost $SourceVMHost | Get-VM | Where {$_.Name -notmatch "^Z\-(?:VRA|VRAH)\-[0-9]{1,6}$"}
+                    $VMsOnHOst = Get-VMHost $SourceVMHost | Get-VM | Where {$_.Name -notlike "Z-VRA*"}
                     Start-Sleep -Seconds 10
                     }
                 CATCH
@@ -161,7 +161,7 @@ FUNCTION Enable-HostMaintenance
             Write-Verbose "Sutting down Zerto VRAs on $SourceVMHost"
             TRY
                 {
-                Get-VMHost $SourceVMHost | Get-VM | Where {$_.Name -match "^Z\-(?:VRA|VRAH)\-[0-9]{1,6}$"} | Shutdown-VMGuest -Confirm:$false | Out-Null
+                Get-VMHost $SourceVMHost | Get-VM | Where {$_.Name -like "Z-VRA*"} | Shutdown-VMGuest -Confirm:$false | Out-Null
                 }
             CATCH
                 {
